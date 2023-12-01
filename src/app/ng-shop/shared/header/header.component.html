@@ -1,0 +1,23 @@
+<header>
+  <div class="p-grid">
+    <div class="p-col-3">
+      <div class="logo">
+        <img src="assets/images/logo.png" alt="logo" />
+      </div>
+    </div>
+    <div class="p-col-4 search"><app-product-search></app-product-search></div>
+    <div class="p-col-3 p-offset-1 navigation">
+      <app-nav></app-nav>
+    </div>
+    <div class="p-col-1 tools">
+      <span>
+        <i *ngIf="isUserLoggedIn()" class="pi pi-user" style="font-size: 1.5rem; cursor: pointer;" (click)="menu.toggle($event)"></i>
+        <p-tieredMenu #menu [model]="items" [popup]="true"></p-tieredMenu>
+      </span>
+      <span>
+        <i *ngIf="!isUserLoggedIn()" pTooltip="Log In" class="pi pi-sign-in p-text-secondary" routerLink="/login" style="font-size: 1.5rem; cursor: pointer;"></i>
+      </span>
+      <app-cart-icon></app-cart-icon>
+    </div>
+  </div>
+</header>

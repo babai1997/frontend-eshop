@@ -1,0 +1,29 @@
+<div class="spinner" *ngIf="isSpinner">
+  <p-progressSpinner></p-progressSpinner>
+</div>
+<div class="products-page">
+  <div class="p-grid">
+    <div class="p-col-2" *ngIf="!isCategoryPage">
+      <h4>Categories</h4>
+      <div class="p-field-checkbox" *ngFor="let category of categories">
+        <p-checkbox
+          [(ngModel)]="category.checked"
+          [binary]="true"
+          [inputId]="category._id"
+          (onChange)="categoryFilter()"
+        ></p-checkbox>
+        <label for="{{ category._id }}">{{ category.name }}</label>
+      </div>
+    </div>
+    <div [ngClass]="{ 'p-col-9': !isCategoryPage, 'p-col-12': isCategoryPage }">
+      <div class="p-grid" *ngIf="products && !isSpinner">
+        <div
+          [ngClass]="{ 'p-col-4': !isCategoryPage, 'p-col-3': isCategoryPage }"
+          *ngFor="let product of products"
+        >
+          <app-product-item [product]="product"></app-product-item>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
