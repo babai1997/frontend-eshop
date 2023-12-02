@@ -3,8 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-    production: false,
-    apiUrl: 'http://localhost:3000/api/v1/'
+    production: true,
+    apiUrl: 'https://backend-eshop.onrender.com/api/v1/'
+    //apiUrl: 'http://localhost:3000/api/v1/'
 };
 
 /*

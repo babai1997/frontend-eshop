@@ -23,7 +23,7 @@ export class AuthService {
   }
 
   signup(name:string, email: string, password: string): Observable<User> {
-    return this.http.post<User>(`${this.apiURLUsers}/signup`, { name, email, password });
+    return this.http.post<User>(`${this.apiURLUsers}/register`, { name, email, password });
   }
 
   logout() {

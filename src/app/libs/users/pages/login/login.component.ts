@@ -40,11 +40,25 @@ export class LoginComponent implements OnInit {
     if (this.loginFormGroup.invalid) return;
 
     this.auth.login(this.loginForm['email'].value, this.loginForm['password'].value).subscribe(
-      (user) => {
+      {
+        //next: (v) => console.log(v),
+        error: (error) => {
+        this.authError = true;
+        if (error.status !== 401) {
+          this.authMessage = 'Error in the Server, please try again later!';
+           }
+        },
+        next: (user) => {
         this.authError = false;
         this.localstorageService.setToken(user['data'].accessToken);
         this.router.navigate(['/']);
-      },
+        }
+      }
+      // (user) => {
+      //   this.authError = false;
+      //   this.localstorageService.setToken(user['data'].accessToken);
+      //   this.router.navigate(['/']);
+      // },
       // (error: HttpErrorResponse) => {
       //   this.authError = true;
       //   if (error.status !== 400) {

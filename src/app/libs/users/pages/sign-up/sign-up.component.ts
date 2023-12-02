@@ -14,7 +14,7 @@ export class SignUpComponent implements OnInit {
   loginFormGroup: FormGroup;
   isSubmitted = false;
   authError = false;
-  authMessage = 'Email or Password are wrong';
+  authMessage = 'Email already exists';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -40,18 +40,24 @@ export class SignUpComponent implements OnInit {
 
     if (this.loginFormGroup.invalid) return;
 
-    this.auth.signup(this.loginForm['name'].value, this.loginForm['email'].value, this.loginForm['password'].value).subscribe(
-      (user) => {
+    this.auth.signup(this.loginForm['name'].value,
+    this.loginForm['email'].value,
+    this.loginForm['password'].value).subscribe(
+      {
+        //next: (v) => console.log(v),
+        error: (error) => {
+        this.authError = true;
+        if (error.status !== 409) {
+          this.authMessage = 'Error in the Server, please try again later!';
+           }
+        },
+        next: (user) => {
         this.authError = false;
-        this.localstorageService.setToken(user['data'].token);
+        this.localstorageService.setToken(user['data'].accessToken);
         this.router.navigate(['/']);
-      },
-      // (error: HttpErrorResponse) => {
-      //   this.authError = true;
-      //   if (error.status !== 400) {
-      //     this.authMessage = 'Error in the Server, please try again later!';
-      //   }
-      // }
+        }
+      }
+
     );
   }
 
